@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <span>{{publishedBooksMessage}}</span>
+        <span>{{now}}</span>
+    </div>
+    <script>
+        const HelloVueApp = {
+            data() {
+                return {
+                    author: {
+                        name: 'John Doe',
+                        books: [
+                            'Vue 2 - Advanced Guide',
+                            'Vue 3 - Basic Guide',
+                            'Vue 4 - The Mystery'
+                        ]
+                    }
+                }
+            },
+            computed: {
+                publishedBooksMessage() {
+                    return this.author.books.length > 0 ? "YES" : "NO"
+                },
+                //now will no update,because now function no include reactive dependency.
+                now() {
+                    return Date.now()
+                }
+            },
+            mounted() {
+
+                setInterval(() => {
+                    this.num++;
+                }, 1000)
+            },
+            methods: {
+                reverseMessage() {
+                    this.message = this.message
+                        .split(" ")
+                        .reverse()
+                        .join(" ")
+                }
+            }
+        }
+
+        const app = Vue.createApp(HelloVueApp);
+        app.component('to-do', {
+            props: ['todo'],
+            template: `<li> {{todo.text}}</li>`
+        })
+        app.mount("#app")
+    </script>
+</body>
+
+</html>
